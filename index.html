@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MASTERIZE - Aprenda na Prática</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>MASTERIZE</h1>
+      <nav>
+        <ul>
+          <li><a href="#inicio">Início</a></li>
+          <li><a href="#como-funciona">Como Funciona</a></li>
+          <li><a href="#exercicios">Exercícios</a></li>
+          <li><a href="#area-professor">Área do Professor</a></li>
+          <li><a href="#login" class="btn-login">Login</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section id="inicio" class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <h2>Aprenda resolvendo exercícios com ajuda da IA</h2>
+        <p>Plataforma educacional interativa que coloca o estudante no centro do aprendizado.</p>
+        <a href="#exercicios" class="btn-primary">Começar a praticar</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="como-funciona" class="features">
+    <div class="container">
+      <h2>Como Funciona</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <i class="fas fa-pencil-alt"></i>
+          <h3>Resolva Exercícios</h3>
+          <p>Aprenda na prática resolvendo problemas reais sem longas leituras teóricas.</p>
+        </div>
+        <div class="feature-card">
+          <i class="fas fa-check-circle"></i>
+          <h3>Correção Automática</h3>
+          <p>Receba feedback imediato sobre suas respostas e saiba onde melhorar.</p>
+        </div>
+        <div class="feature-card">
+          <i class="fas fa-lightbulb"></i>
+          <h3>Explicações Passo a Passo</h3>
+          <p>A IA identifica suas dúvidas e oferece explicações personalizadas.</p>
+        </div>
+        <div class="feature-card">
+          <i class="fas fa-user-graduate"></i>
+          <h3>Suporte de Professores</h3>
+          <p>Professores acompanham seu progresso e garantem que você esteja no caminho certo.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="exercicios" class="exercises">
+    <div class="container">
+      <h2>Exercícios Disponíveis</h2>
+      <div class="subject-filter">
+        <button class="filter-btn active" data-subject="todos">Todos</button>
+        <button class="filter-btn" data-subject="matematica">Matemática</button>
+        <button class="filter-btn" data-subject="portugues">Português</button>
+        <button class="filter-btn" data-subject="ciencias">Ciências</button>
+      </div>
+      <div class="exercises-grid">
+        <!-- Os exercícios serão carregados dinamicamente via JavaScript -->
+      </div>
+    </div>
+  </section>
+
+  <section id="exercise-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal">&times;</span>
+      <h2 id="exercise-title">Título do Exercício</h2>
+      <div id="exercise-description"></div>
+      <div id="exercise-interaction">
+        <textarea id="user-answer" placeholder="Digite sua resposta aqui..."></textarea>
+        <button id="submit-answer" class="btn-primary">Enviar Resposta</button>
+      </div>
+      <div id="answer-feedback" class="hidden">
+        <div id="feedback-content"></div>
+        <button id="request-help" class="btn-secondary">Preciso de Ajuda</button>
+      </div>
+      <div id="ai-help" class="chat-container hidden">
+        <div id="chat-box" class="chat-box"></div>
+        <div class="chat-input">
+          <input type="text" id="user-input" placeholder="Faça uma pergunta sobre o exercício...">
+          <button id="send-btn">Enviar</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="area-professor" class="teacher-area">
+    <div class="container">
+      <h2>Área do Professor</h2>
+      <p>Cadastre exercícios, acompanhe o progresso dos alunos e ofereça suporte personalizado.</p>
+      <div class="login-form">
+        <input type="email" placeholder="E-mail" id="teacher-email">
+        <input type="password" placeholder="Senha" id="teacher-password">
+        <button class="btn-primary" id="teacher-login">Entrar</button>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2024 MASTERIZE - Todos os direitos reservados</p>
+    </div>
+  </footer>
+  
+  <script src="script.js"></script>
+</body>
+</html>

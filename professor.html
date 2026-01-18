@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MASTERIZE - Área do Professor</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <style>
+    /* Estilos específicos para área do professor */
+    .dashboard-cards {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    
+    .dashboard-card {
+      flex: 1;
+      background-color: #f5f5f5;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    
+    .big-number {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #4a6de5;
+    }
+    
+    .teacher-tabs {
+      display: flex;
+      margin-bottom: 20px;
+      border-bottom: 1px solid #ddd;
+    }
+    
+    .tab-btn {
+      padding: 10px 20px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 500;
+    }
+    
+    .tab-btn.active {
+      border-bottom: 3px solid #4a6de5;
+      color: #4a6de5;
+    }
+    
+    .tab-content {
+      display: none;
+    }
+    
+    .tab-content.active {
+      display: block;
+    }
+    
+    .exercises-table {
+      width: 100%;
+      overflow-x: auto;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    th, td {
+      padding: 12px 15px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    
+    th {
+      background-color: #f5f5f5;
+    }
+    
+    .action-bar {
+      margin-bottom: 20px;
+    }
+    
+    .student-card {
+      background-color: #f5f5f5;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 15px;
+    }
+    
+    .progress-bar {
+      height: 20px;
+      background-color: #e0e0e0;
+      border-radius: 10px;
+      margin: 10px 0;
+      position: relative;
+    }
+    
+    .progress {
+      height: 100%;
+      background-color: #4a6de5;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <div class="logo">
+        <h1>MASTERIZE</h1>
+        <span class="tagline">Área do Professor</span>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="index.html">Página Inicial</a></li>
+        </ul>
+      </nav>
+      <div class="user-area">
+        <div id="user-profile">
+          <span id="user-name">Professor</span>
+          <span id="user-type-badge" class="teacher-badge">Professor</span>
+        </div>
+        <button id="logout-btn" class="btn-secondary">Sair</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Conteúdo Principal -->
+  <main>
+    <div class="container">
+      <h2>Painel do Professor</h2>
+      
+      <!-- Tabs de Navegação -->
+      <div class="teacher-tabs">
+        <button class="tab-btn active" data-tab="resumo">Resumo</button>
+        <button class="tab-btn" data-tab="exercicios">Exercícios</button>
+        <button class="tab-btn" data-tab="alunos">Alunos</button>
+      </div>
+      
+      <!-- Tab Resumo -->
+      <div id="resumo" class="tab-content active">
+        <div class="dashboard-cards">
+          <div class="dashboard-card">
+            <h3>Exercícios</h3>
+            <p class="big-number" id="total-exercicios">0</p>
+          </div>
+          <div class="dashboard-card">
+            <h3>Alunos</h3>
+            <p class="big-number" id="total-alunos">0</p>
+          </div>
+          <div class="dashboard-card">
+            <h3>Taxa de Conclusão</h3>
+            <p class="big-number" id="taxa-conclusao">0%</p>
+          </div>
+        </div>
+        
+        <h3>Atividade Recente</h3>
+        <ul id="recent-activity-list">
+          <!-- Preenchido via JavaScript -->
+          <li>Nenhuma atividade recente</li>
+        </ul>
+      </div>
+      
+      <!-- Tab Exercícios -->
+      <div id="exercicios" class="tab-content">
+        <div class="action-bar">
+          <button id="add-exercise-btn" class="btn-primary">
+            <i class="fas fa-plus"></i> Novo Exercício
+          </button>
+          
+          <select id="filter-subject" style="margin-left: 10px;">
+            <option value="todos">Todas as Matérias</option>
+            <option value="matematica">Matemática</option>
+            <option value="portugues">Português</option>
+            <option value="ciencias">Ciências</option>
+          </select>
+        </div>
+        
+        <div class="exercises-table">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Título</th>
+                <th>Matéria</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody id="exercises-list">
+              <!-- Preenchido via JavaScript -->
+              <tr>
+                <td colspan="4">Carregando exercícios...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      
+      <!-- Tab Alunos -->
+      <div id="alunos" class="tab-content">
+        <h3>Lista de Alunos</h3>
+        <div id="student-list">
+          <!-- Preenchido via JavaScript -->
+          <p>Carregando lista de alunos...</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Modal de Novo Exercício -->
+  <div id="new-exercise-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal">&times;</span>
+      <h2>Novo Exercício</h2>
+      
+      <form id="new-exercise-form">
+        <div class="form-group">
+          <label for="exercise-title-input">Título:</label>
+          <input type="text" id="exercise-title-input" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="exercise-subject">Matéria:</label>
+          <select id="exercise-subject" required>
+            <option value="matematica">Matemática</option>
+            <option value="portugues">Português</option>
+            <option value="ciencias">Ciências</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="exercise-description-input">Descrição/Pergunta:</label>
+          <textarea id="exercise-description-input" rows="4" required></textarea>
+        </div>
+        
+        <div class="form-group">
+          <label for="exercise-answer">Resposta Correta:</label>
+          <textarea id="exercise-answer" rows="2" required></textarea>
+        </div>
+        
+        <div class="form-group">
+          <label for="exercise-explanation">Explicação:</label>
+          <textarea id="exercise-explanation" rows="4" required></textarea>
+        </div>
+        
+        <button type="submit" class="btn-primary">Adicionar Exercício</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2023 MASTERIZE - Plataforma Educacional</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    // Script específico para a área do professor
+    document.addEventListener('DOMContentLoaded', () => {
+      // Verificar se o usuário está logado como professor
+      checkTeacherLogin();
+      
+      // Configurar tabs
+      setupTabs();
+      
+      // Carregar dados iniciais
+      loadDashboardData();
+      loadExercisesList();
+      loadStudentsList();
+      
+      // Configurar modal de novo exercício
+      setupNewExerciseModal();
+    });
+    
+    // Verificar login do professor
+    function checkTeacherLogin() {
+      const savedUser = localStorage.getItem('currentUser');
+      const savedMode = localStorage.getItem('currentMode');
+      
+      if (!savedUser || savedMode !== 'teacher') {
+        // Redirecionar para página de login
+        alert('Você precisa estar logado como professor para acessar esta página.');
+        window.location.href = 'index.html';
+      } else {
+        // Atualizar nome do professor
+        const user = JSON.parse(savedUser);
+        document.getElementById('user-name').textContent = user.name;
+      }
+    }
+    
+    // Configurar tabs
+    function setupTabs() {
+      const tabButtons = document.querySelectorAll('.tab-btn');
+      
+      tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          const tabId = button.getAttribute('data-tab');
+          
+          // Atualizar classe ativa nos botões
+          tabButtons.forEach(btn => btn.classList.remove('active'));
+          button.classList.add('active');
+          
+          // Mostrar conteúdo da tab selecionada
+          document.querySelectorAll('.tab-content').forEach(content => {
+            content.classList.remove('active');
+          });
+          document.getElementById(tabId).classList.add('active');
+        });
+      });
+    }
+    
+    // Carregar dados do dashboard
+    function loadDashboardData() {
+      // Carregar dados do localStorage
+      const exercisesDatabase = JSON.parse(localStorage.getItem('exercisesDatabase')) || [];
+      const usersDatabase = JSON.parse(localStorage.getItem('usersDatabase')) || { students: [] };
+      
+      // Atualizar contadores
+      document.getElementById('total-exercicios').textContent = exercisesDatabase.length;
+      document.getElementById('total-alunos').textContent = usersDatabase.students.length;
+      
+      // Calcular taxa de conclusão
+      let completedCount = 0;
+      let totalCount = 0;
+      
+      usersDatabase.students.forEach(student => {
+        if (student.progress) {
+          student.progress.forEach(p => {
+            totalCount++;
+            if (p.completed) completedCount++;
+          });
+        }
+      });
+      
+      const completionRate = totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
+      document.getElementById('taxa-conclusao').textContent = completionRate + '%';
+    }
+    
+    // Carregar lista de exercícios
+    function loadExercisesList() {
+      const exercisesDatabase = JSON.parse(localStorage.getItem('exercisesDatabase')) || [];
+      const exercisesList = document.getElementById('exercises-list');
+      
+      if (exercisesDatabase.length === 0) {
+        exercisesList.innerHTML = '<tr><td colspan="4">Nenhum exercício cadastrado</td></tr>';
+        return;
+      }
+      
+      exercisesList.innerHTML = '';
+      
+      exercisesDatabase.forEach(exercise => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${exercise.id}</td>
+          <td>${exercise.title}</td>
+          <td>${getSubjectName(exercise.subject)}</td>
+          <td>
+            <button class="btn-small edit-exercise" data-id="${exercise.id}">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button class="btn-small delete-exercise" data-id="${exercise.id}">
+              <i class="fas fa-trash"></i>
+            </button>
+          </td>
+        `;
+        exercisesList.appendChild(row);
+      });
+    }
+    
+    // Carregar lista de alunos
+    function loadStudentsList() {
+      const usersDatabase = JSON.parse(localStorage.getItem('usersDatabase')) || { students: [] };
+      const studentList = document.getElementById('student-list');
+      
+      if (usersDatabase.students.length === 0) {
+        studentList.innerHTML = '<p>Nenhum aluno cadastrado</p>';
+        return;
+      }
+      
+      studentList.innerHTML = '';
+      
+      usersDatabase.students.forEach(student => {
+        const studentCard = document.createElement('div');
+        studentCard.className = 'student-card';
+        
+        // Calcular estatísticas
+        const exercisesDatabase = JSON.parse(localStorage.getItem('exercisesDatabase')) || [];
+        const totalExercises = exercisesDatabase.length;
+        const completedExercises = student.progress ? student.progress.filter(p => p.completed).length : 0;
+        const completionRate = totalExercises > 0 ? Math.round((completedExercises / totalExercises) * 100) : 0;
+        
+        studentCard.innerHTML = `
+          <h3>${student.name}</h3>
+          <p>Email: ${student.email}</p>
+          <div class="progress-bar">
+            <div class="progress" style="width: ${completionRate}%"></div>
+            <span>${completionRate}% concluído</span>
+          </div>
+          <p>Exercícios concluídos: ${completedExercises}/${totalExercises}</p>
+        `;
+        
+        studentList.appendChild(studentCard);
+      });
+    }
+    
+    // Configurar modal de novo exercício
+    function setupNewExerciseModal() {
+      const modal = document.getElementById('new-exercise-modal');
+      const addButton = document.getElementById('add-exercise-btn');
+      const closeButton = modal.querySelector('.close-modal');
+      const form = document.getElementById('new-exercise-form');
+      
+      // Abrir modal
+      addButton.addEventListener('click', () => {
+        modal.style.display = 'block';
+      });
+      
+      // Fechar modal
+      closeButton.addEventListener('click', () => {
+        modal.style.display = 'none';
+      });
+      
+      // Fechar ao clicar fora
+      window.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          modal.style.display = 'none';
+        }
+      });
+      
+      // Enviar formulário
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        addNewExercise();
+      });
+    }
+    
+    // Adicionar novo exercício
+    function addNewExercise() {
+      const title = document.getElementById('exercise-title-input').value.trim();
+      const subject = document.getElementById('exercise-subject').value;
+      const description = document.getElementById('exercise-description-input').value.trim();
+      const answer = document.getElementById('exercise-answer').value.trim();
+      const explanation = document.getElementById('exercise-explanation').value.trim();
+      
+      if (!title || !description || !answer || !explanation) {
+        alert('Por favor, preencha todos os campos.');
+        return;
+      }
+      
+      // Carregar exercícios existentes
+      const exercisesDatabase = JSON.parse(localStorage.getItem('exercisesDatabase')) || [];
+      
+      // Criar novo exercício
+      const newExercise = {
+        id: exercisesDatabase.length + 1,
+        title,
+        subject,
+        description,
+        answer,
+        explanation
+      };
+      
+      // Adicionar ao banco de dados
+      exercisesDatabase.push(newExercise);
+      
+      // Salvar no localStorage
+      localStorage.setItem('exercisesDatabase', JSON.stringify(exercisesDatabase));
+      
+      // Limpar formulário
+      document.getElementById('new-exercise-form').reset();
+      
+      // Fechar modal
+      document.getElementById('new-exercise-modal').style.display = 'none';
+      
+      // Recarregar lista de exercícios
+      loadExercisesList();
+      
+      // Atualizar dashboard
+      loadDashboardData();
+      
+      alert('Exercício adicionado com sucesso!');
+    }
+    
+    // Obter nome da matéria formatado
+    function getSubjectName(subject) {
+      const subjects = {
+        'matematica': 'Matemática',
+        'portugues': 'Português',
+        'ciencias': 'Ciências'
+      };
+      return subjects[subject] || subject;
+    }
+    
+    // Logout
+    document.getElementById('logout-btn').addEventListener('click', () => {
+      localStorage.removeItem('currentUser');
+      localStorage.removeItem('currentMode');
+      window.location.href = 'index.html';
+    });
+  </script>
+</body>
+</html>
